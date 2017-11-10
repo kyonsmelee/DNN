@@ -29,7 +29,7 @@ shift_number = int(argvs[2])#データのずらす数:30
 csv_row = int(argvs[3])#csvファイルの列の数:21
 
 n_hidden = 100 #隠れ層のニューロン数
-output_data = 4 #出力次元数
+output_data = 6 #出力次元数
 epoch = 500
 batchSize = 100
 file_counter = 0
@@ -68,26 +68,36 @@ def CorrectData(filename): #正解データ作成関数
     data_split = filename.split('_')
     #print data_split[2]
     if int(data_split[2]) == 10:
-        Y = [1,0,0,0]
+        Y = [1,0,0,0,0,0]
     elif int(data_split[2]) == 15:
-        Y = [0,1,0,0]
-    elif int(data_split[2]) == 15:
-        Y = [0,1,0,0]
+        Y = [0,1,0,0,0,0]
+    elif int(data_split[2]) == 50:
+        Y = [0,0,1,0,0,0]
+    elif int(data_split[2]) == 100:
+        Y = [0,0,0,1,0,0]
+    elif int(data_split[2]) == 110:
+        Y = [0,0,0,0,1,0]
     else:
-        Y = [0,0,0,1]
+        Y = [0,0,0,0,0,1]
     return Y
 
 rssi_au_10 = getdata("rssi_au_10")
 rssi_au_15 = getdata("rssi_au_15")
+rssi_au_15_2 = getdata("rssi_au_15_2")
+rssi_au_50 = getdata("rssi_au_50")
 rssi_au_100 = getdata("rssi_au_100")
+rssi_au_110 = getdata("rssi_au_110")
 rssi_au_120 = getdata("rssi_au_120")
 rssi_softbank_10 = getdata("rssi_softbank_10")
 rssi_softbank_15 = getdata("rssi_softbank_15")
+rssi_softbank_15_2 = getdata("rssi_softbank_15_2")
+rssi_softbank_50 = getdata("rssi_softbank_50")
 rssi_softbank_100 = getdata("rssi_softbank_100")
+rssi_softbank_110 = getdata("rssi_softbank_110")
 rssi_softbank_120 = getdata("rssi_softbank_120")
 
-X = np.concatenate((rssi_au_10[0],rssi_au_15[0],rssi_au_100[0],rssi_au_120[0],rssi_softbank_10[0],rssi_softbank_15[0],rssi_softbank_100[0],rssi_softbank_120[0]),axis=0)
-Y = np.concatenate((rssi_au_10[1],rssi_au_15[1],rssi_au_100[1],rssi_au_120[1],rssi_softbank_10[1],rssi_softbank_15[1],rssi_softbank_100[1],rssi_softbank_120[1]),axis=0)
+X = np.concatenate((rssi_au_10[0],rssi_au_15[0],rssi_au_15_2[0],rssi_au_50[0],rssi_au_100[0],rssi_au_110[0],rssi_au_120[0],rssi_softbank_10[0],rssi_softbank_15[0],rssi_softbank_15_2[0],rssi_softbank_50[0],rssi_softbank_100[0],rssi_softbank_110[0],rssi_softbank_120[0]),axis=0)
+Y = np.concatenate((rssi_au_10[1],rssi_au_15[1],rssi_au_15_2[1],rssi_au_50[1],rssi_au_100[1],rssi_au_110[1],rssi_au_120[1],rssi_softbank_10[1],rssi_softbank_15[1],rssi_softbank_15_2[1],rssi_softbank_50[1],rssi_softbank_100[1],rssi_softbank_110[1],rssi_softbank_120[1]),axis=0)
 
 print len(X),len(Y)
 
