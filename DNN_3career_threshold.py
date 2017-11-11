@@ -66,7 +66,8 @@ def getdata(filename): #データ取得関数
         for k in range(shift_count):
             list_data.append(list_threshold_norm[k*shift_number:k*shift_number+input_data])
             list_Y.append(CorrectData(filename))
-
+            
+        list_threshold = [ ] #閾値超えデータの初期化
     print len(list_data)
     list_return_data.append(list_data)
     list_return_data.append(list_Y)
