@@ -24,9 +24,10 @@ if os.path.exists(MODEL_DIR) is False:
     os.mkdir(MODEL_DIR)
 
 argvs = sys.argv
-input_data = int(argvs[1])#入力次元数:60
-shift_number = int(argvs[2])#データのずらす数:30
-csv_row = int(argvs[3])#csvファイルの列の数:21
+input_data = int(argvs[1])     #入力次元数:60
+shift_number = int(argvs[2])   #データのずらす数:30
+csv_row = int(argvs[3])        #csvファイルの列の数:21
+std_multiple = float(argvs[4]) #標準偏差σの倍数
 
 n_hidden = 100 #隠れ層のニューロン数
 output_data = 6 #出力次元数
@@ -41,7 +42,7 @@ list_small_set_length = [ ]
 
 now = datetime.datetime.now()
 time = datetime.time(now.hour,now.minute,now.second)
-fname = 'threshold:time={}'.format(time)
+fname = 'threshold_multiple{}_{}.{}.{}'.format(std_multiple,now.hour,now.minute,now.second)
 
 def getdata(filename): #データ取得関数
     list_Y = [ ]
@@ -54,7 +55,7 @@ def getdata(filename): #データ取得関数
         data = np.loadtxt("/Users/kyonsu/Desktop/研究/Tensorflow/{}.csv".format(filename),delimiter=",",usecols=(i+1))
         data_ave = np.average(data)
         data_std = np.std(data)
-        data_threshold = data_ave + data_std * 1 #閾値：平均値＋標準偏差*n
+        data_threshold = data_ave + data_std * std_multiple #閾値：平均値＋標準偏差*n
 
         for j in range(len(data)):
             if data[j] > data_threshold:
