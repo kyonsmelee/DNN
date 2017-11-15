@@ -112,6 +112,7 @@ rssi_softbank_100 = getdata("rssi_softbank_100")
 rssi_softbank_110 = getdata("rssi_softbank_110")
 rssi_softbank_120 = getdata("rssi_softbank_120")
 
+
 X = np.concatenate((rssi_au_10[0],rssi_au_15[0],rssi_au_15_2[0],rssi_au_50[0],rssi_au_100[0],rssi_au_110[0],rssi_au_120[0],rssi_softbank_10[0],rssi_softbank_15[0],rssi_softbank_15_2[0],rssi_softbank_50[0],rssi_softbank_100[0],rssi_softbank_110[0],rssi_softbank_120[0]),axis=0)
 Y = np.concatenate((rssi_au_10[1],rssi_au_15[1],rssi_au_15_2[1],rssi_au_50[1],rssi_au_100[1],rssi_au_110[1],rssi_au_120[1],rssi_softbank_10[1],rssi_softbank_15[1],rssi_softbank_15_2[1],rssi_softbank_50[1],rssi_softbank_100[1],rssi_softbank_110[1],rssi_softbank_120[1]),axis=0)
 print len(X),len(Y)
