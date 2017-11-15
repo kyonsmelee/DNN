@@ -44,7 +44,7 @@ def getdata(filename): #データ取得関数
     list_threshold_norm = [ ]
 
     for i in range(csv_row): #csvファイルの列数分
-        csv_data = np.loadtxt("/Users/kyonsu/Desktop/研究/Tensorflow/{}.csv".format(filename),delimiter=",",usecols=(i+1))
+        csv_data = np.loadtxt("/data/shibata/Tensorflow/DNN/{}.csv".format(filename),delimiter=",",usecols=(i+1))
         output_count = int(math.floor(int(len(csv_data))/output_timing)) #出力回数:全体データ数を推定人数を出力するデータ数で割る
         for j in range(output_count):
             for k in range(output_timing): #取得するデータ数分での平均値・標準偏差を算出するために使用するデータ数取得する
@@ -73,7 +73,7 @@ def getdata(filename): #データ取得関数
 data = getdata("rssi_au_10")
 X = np.concatenate((data),axis=0) #これがない場合、配列を1つにまとめれないのでエラー出る
 
-model = load_model('/Users/kyonsu/Desktop/研究/Tensorflow/model/model_3ca_threshold.hdf5')
+model = load_model('/data/shibata/Tensorflow/DNN/model/model_3ca_threshold.hdf5')
 prob = model.predict_proba(X,batch_size=batchSize,verbose=1)
 classes = model.predict_classes(X,batch_size=batchSize,verbose=1)
 
