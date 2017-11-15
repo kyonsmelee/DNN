@@ -52,23 +52,30 @@ def getdata(filename): #データ取得関数
     list_threshold_norm = [ ]
 
     for i in range(csv_row): #csvファイルの列数分
-        data = np.loadtxt("/Users/kyonsu/Desktop/研究/Tensorflow/{}.csv".format(filename),delimiter=",",usecols=(i+1))
-        data_ave = np.average(data)
-        data_std = np.std(data)
-        data_threshold = data_ave + data_std * std_multiple #閾値：平均値＋標準偏差*n
+        csv_data = np.loadtxt("/Users/kyonsu/Desktop/研究/Tensorflow/{}.csv".format(filename),delimiter=",",usecols=(i+1))
+        output_count = int(math.floor(int(len(csv_data))/output_timing)) #出力回数:全体データ数を推定人数を出力するデータ数で割る
+        for j in range(output_count):
+            for k in range(output_timing): #data[]に出力するまでに取得するデータ数分のデータをcsvファイルから取り出す
+                data.append(csv_data[k+j*output_timing])
+            data_ave = np.average(data)
+            data_std = np.std(data)
+            data_threshold = data_ave + data_std * std_multiple #閾値：平均値＋標準偏差*n
 
-        for j in range(len(data)):
-            if data[j] > data_threshold:
-                list_threshold.append(data[j])
+            for l in range(output_timing): #data[]データの閾値を超えて入るものだけ取得
+                if data[l] > data_threshold: #l+output_timing*jとすることでdata[]を常に0からforでloopさせることなく、dataの中身全てをチェックできる
+                    list_threshold.append(data[l])
+            print i,j,len(list_threshold)
+            list_threshold_norm = list_threshold/max(list_threshold) #正規化
+            shift_count = int(math.floor((len(list_threshold_norm) - input_data)/shift_number) + 1)
 
-        list_threshold_norm = list_threshold/max(list_threshold) #正規化
-        shift_count = int(math.floor((len(list_threshold_norm) - input_data)/shift_number) + 1)
-        for k in range(shift_count):
-            list_data.append(list_threshold_norm[k*shift_number:k*shift_number+input_data])
-            list_Y.append(CorrectData(filename))
-            
-        list_threshold = [ ] #閾値超えデータの初期化
+            for m in range(shift_count):
+                list_data.append(list_threshold_norm[m*shift_number:m*shift_number+input_data])
+                list_Y.append(CorrectData(filename))
+
+            list_threshold = [ ] #閾値超えデータの初期化
+            data = [ ] #600個区切りのデータの初期化
     print len(list_data)
+    print "get data"
     list_return_data.append(list_data)
     list_return_data.append(list_Y)
     return list_return_data
